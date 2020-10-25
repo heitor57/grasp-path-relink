@@ -8,7 +8,8 @@ class Grasp
   float alpha;
   int iter_max;
   long unsigned int num_elite;
-  Grasp(float alpha_,int iter_max_, long unsigned int num_elite_);
+  bool use_path_relinking;
+  Grasp(float alpha_,int iter_max_, long unsigned int num_elite_, bool use_path_relinking_);
   void construction(const BinaryKnapsack& binary_knapsack,
                     std::vector<bool>& solution);
   std::vector<bool> run(BinaryKnapsack binary_knapsack);

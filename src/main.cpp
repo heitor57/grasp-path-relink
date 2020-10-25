@@ -26,7 +26,7 @@ int main(int argc, char **argv){
     in_file >> binary_knapsack.items[i].utility >>binary_knapsack.items[i].weight;
     binary_knapsack.items[i].id = i;
   }
-  Grasp grasp(0.7,50,10);
+  Grasp grasp(0.7,50,10,false);
   auto solution = grasp.run(binary_knapsack);
 
   std::cout << "Best solution: "

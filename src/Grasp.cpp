@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <random>
-#include <cfloat>
+#include <climits>
 #include <list>
 #include <string>
 #include "objective_function.h"
@@ -56,11 +56,11 @@ void Grasp::construction(const BinaryKnapsack& binary_knapsack,
   }
 }
 
-std::vector<bool>& Grasp::path_relinking(BinaryKnapsack& binary_knapsack,std::vector<bool>& s1,std::vector<bool>& s2){
+std::vector<bool> Grasp::path_relinking(BinaryKnapsack& binary_knapsack,std::vector<bool>& s1,std::vector<bool>& s2){
   std::vector<bool> aux_solution = s1;
   std::vector<bool> best_solution(s1.size());
   std::vector<bool> best_local_solution(s1.size());
-  long best_ofv=0,best_local_ofv=0,current_ofv=0;
+  long best_ofv=LONG_MIN,best_local_ofv=LONG_MIN,current_ofv=LONG_MIN;
   std::list<long unsigned int> different_values_positions;
   // different_values_positions.reserve(int(0.8*s1.size()));
   for(long unsigned int i=0; i<s1.size();i++){
@@ -69,31 +69,40 @@ std::vector<bool>& Grasp::path_relinking(BinaryKnapsack& binary_knapsack,std::ve
     }
   }
 
-  auto best_element;
-  for(auto i=0;i < different_values_positions.size();i++){
-    current_ofv = 0;
-    best_local_ofv = 0;
+  auto best_local_element= different_values_positions.begin();// just to initialize
+  for(long unsigned int i=0;i < different_values_positions.size();i++){
+    current_ofv = LONG_MIN;
+    best_local_ofv = LONG_MIN;
     for(auto j=different_values_positions.begin();j!=different_values_positions.end();++j){
       aux_solution[*j]= !aux_solution[*j];
       current_ofv = objective_function(binary_knapsack,aux_solution);
       if(current_ofv > best_local_ofv){
         best_local_ofv = current_ofv;
+        best_local_solution = aux_solution;
+        best_local_element = j;
       }
       aux_solution[*j]= !aux_solution[*j];
     }
+    different_values_positions.erase(best_local_element);
+    if(best_local_ofv > best_ofv){
+      best_ofv = best_local_ofv;
+      best_solution = best_local_solution;
+    }
+    
   }
-  return aux_solution;
+  return best_solution;
 }
 
 
 std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack)
 {
-  long fo_star = -1;
+  long fo_star = LONG_MIN;
   std::vector<long> elites_ofv;
   std::vector<std::vector<bool>> elites_solution;
         
   std::vector<bool> solution(binary_knapsack.items.size(),false);
   std::vector<bool> aux_solution(binary_knapsack.items.size(),false);
+  
 
   for (int i = 0; i<iter_max; i++) {
     // Limpa solucao
@@ -108,9 +117,17 @@ std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack)
     printf("Refined solution: %ld\n", objective_function(binary_knapsack,aux_solution));
 
     if(elites_solution.size()>=2){
-      for(auto& elite_solution: elites_solution){
-        path_relinking(binary_knapsack,elite_solution,aux_solution);
+      std::vector<bool>& best_path_relinking_solution=aux_solution;
+      // best_path_relinking_solution=elites_solution.begin();
+      // for(auto& elite_solution: std::next(elites_solution.begin(),1)){
+      for(long unsigned int i=1;i<elites_solution.size();i++){
+        std::vector<bool> current_path_relinking_solution=path_relinking(binary_knapsack,elites_solution[i],aux_solution);
+        if(objective_function(binary_knapsack,current_path_relinking_solution)>
+           objective_function(binary_knapsack,best_path_relinking_solution)){
+          best_path_relinking_solution=current_path_relinking_solution;
+        }
       }
+      aux_solution=best_path_relinking_solution;
     }
 
     if(elites_solution.size()<num_elite){

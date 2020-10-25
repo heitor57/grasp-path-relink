@@ -21,14 +21,16 @@ int main(int argc, char **argv){
   int num_items,capacity;
   in_file >> num_items >> capacity;
   BinaryKnapsack binary_knapsack = BinaryKnapsack(num_items,capacity);
+
   for(int i=0; i<num_items; i++){
     in_file >> binary_knapsack.items[i].utility >>binary_knapsack.items[i].weight;
-  }
-  for(long unsigned int i = 0;i<binary_knapsack.items.size() ;i++){
     binary_knapsack.items[i].id = i;
   }
-  Grasp grasp(0.5,5);
+  Grasp grasp(0.7,50,10);
   auto solution = grasp.run(binary_knapsack);
-  objective_function(binary_knapsack,solution);
+
+  std::cout << "Best solution: "
+            << objective_function(binary_knapsack,solution)
+            << std::endl ;
   return 0;
 }

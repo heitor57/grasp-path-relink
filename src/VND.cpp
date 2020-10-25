@@ -1,49 +1,49 @@
 #include "VND.h"
 #include "objective_function.h"
 
-void best_neighbor_1(BinaryKnapsack binary_knapsack, std::vector<bool> solution)
+void best_neighbor_1(BinaryKnapsack& binary_knapsack, std::vector<bool>& solution)
 {
-    double fo_original;
-    double fo_max;
-    double fo_vizinho;
-    int melhor_bit;
+  long fo_original;
+  long fo_max;
+  long fo_vizinho;
+  int melhor_bit;
     
-    fo_original = objective_function(binary_knapsack,solution);
+  fo_original = objective_function(binary_knapsack,solution);
     
-    fo_max = -DBL_MAX;
+  fo_max = -DBL_MAX;
         
-    for (long unsigned int j = 0; j < solution.size(); j++) {
+  for (long unsigned int j = 0; j < solution.size(); j++) {
             
-      solution[j] = !solution[j];
+    solution[j] = !solution[j];
             
-      fo_vizinho = objective_function(binary_knapsack,solution);
+    fo_vizinho = objective_function(binary_knapsack,solution);
             
-      // armazena melhor vizinho
-      if (fo_vizinho > fo_max) {
-        melhor_bit = j;
-        fo_max = fo_vizinho;
-      }
-            
-      // volta a solucao inicial
-      solution[j] = !solution[j];
+    // armazena melhor vizinho
+    if (fo_vizinho > fo_max) {
+      melhor_bit = j;
+      fo_max = fo_vizinho;
     }
+            
+    // volta a solucao inicial
+    solution[j] = !solution[j];
+  }
         
-    // se encontrou algum vizinho melhor
-    if (fo_max > fo_original) {
-      solution[melhor_bit] = !solution[melhor_bit];
-      // troca_bit(s,melhor_bit);
-      printf("Vizinho melhor em N1! FO = %lf\n", fo_max);
-    }
+  // se encontrou algum vizinho melhor
+  if (fo_max > fo_original) {
+    solution[melhor_bit] = !solution[melhor_bit];
+    // troca_bit(s,melhor_bit);
+    printf("Vizinho melhor em N1! FO = %ld\n", fo_max);
+  }
 
 }
 
 /* aplica busca local pela estrategia do melhor aprimorante */
-void best_neighbor_2(BinaryKnapsack binary_knapsack, std::vector<bool> solution)
+void best_neighbor_2(BinaryKnapsack& binary_knapsack, std::vector<bool>& solution)
 {
-  double fo_max, fo_vizinho;
+  long fo_max, fo_vizinho;
   int melhor_bit_1, melhor_bit_2;
     
-  double fo_original = objective_function(binary_knapsack,solution);
+  long fo_original = objective_function(binary_knapsack,solution);
     
   fo_max = -DBL_MAX;
         
@@ -81,12 +81,12 @@ void best_neighbor_2(BinaryKnapsack binary_knapsack, std::vector<bool> solution)
   if (fo_max > fo_original) {
     solution[melhor_bit_1] = !solution[melhor_bit_1];
     solution[melhor_bit_2] = !solution[melhor_bit_2];
-    printf("Vizinho melhor em N2! FO = %lf\n", fo_max);
+    printf("Vizinho melhor em N2! FO = %ld\n", fo_max);
   }
 }
-void VND(BinaryKnapsack binary_knapsack,std::vector<bool> solution){
+void VND(BinaryKnapsack& binary_knapsack,std::vector<bool>& solution){
   int k=1;
-  double ofv_s;
+  long ofv_s;
   while(k <= 2){
     ofv_s = objective_function(binary_knapsack,solution);
     switch(k){

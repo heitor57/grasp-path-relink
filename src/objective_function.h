@@ -4,5 +4,5 @@
 #include <algorithm>
 #include <vector>
 #include "BinaryKnapsack.h"
-double objective_function(BinaryKnapsack binary_knapsack, std::vector<bool> solution);
+long objective_function(BinaryKnapsack& binary_knapsack, std::vector<bool>& solution);
 #endif

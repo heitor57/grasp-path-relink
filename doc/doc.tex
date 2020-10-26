@@ -1,0 +1,74 @@
+% Created 2020-10-26 Mon 14:23
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[portuguese]{babel}
+\usepackage{mathtools}
+\usepackage[binary-units=true]{siunitx}
+\usepackage[top=0.5cm,bottom=1.5cm,left=2cm,right=2cm]{geometry}
+\usepackage{mdframed}
+\usepackage{listings}
+\usepackage{algpseudocode}
+\usepackage[Algoritmo]{algorithm}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{graphicx,wrapfig,lipsum}
+\usepackage{pifont}
+\usepackage{subfigure}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{tablefootnote}
+\usepackage{enumitem}
+\usepackage{natbib}
+\usepackage{dblfloatfix}
+\usepackage{color, colortbl}
+\usepackage{chngcntr}
+\usepackage{epstopdf}
+\usepackage{comment}
+\usepackage{float}
+\author{Heitor Lourenço Werneck}
+\date{}
+\title{Heurística e Metaheurísticas\\\medskip
+\large Atividade Avaliativa 3}
+\hypersetup{
+ pdfauthor={Heitor Lourenço Werneck},
+ pdftitle={Heurística e Metaheurísticas},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.1 (Org mode 9.3)}, 
+ pdflang={Portuguese}}
+\begin{document}
+
+\maketitle
+
+\section{Introdução}
+\label{sec:org1842bc3}
+
+O GRASP é um método que utiliza como princípio a combinação de um método construtivo com busca local, em um procedimento iterativo com iterações completamente independentes.
+
+Já o Path Relinking é um método que faz um balanço entre intensificação e diversificação, o método considera um par de soluções e o objetivo e chegar na solução guia a partir da solução de partida, por meio disto ele consegue os feitos citados anteriormente.
+
+A combinação dos dois métodos será estudada a seguir.
+
+\section{Estrátegias e implementação}
+\label{sec:orgc542255}
+
+Para a formulação do GRASP primeiro foi utilizado uma heuristica construtiva por valor, ou seja, a lista restrita de candidatos é \(\{j | c_j \geq c_{max} - \alpha(c_{max}-c_{min})\}\). O alpha utilizado foi \(0.7\), isso tendo uma lista bem diversa em soluções.
+
+O algoritmo de busca local utilizado foi o VND(Variable Neighborhood Descent), sendo este algoritmo uma busca local que utiliza vizinhanças sucessivas na descida até um ótimo local. Se uma solução \(s\) não é melhorada na sua vizinhança atual/corrente \(N^k(s)\), a estrutura é alterada da vizinhança \(N^k\) para \(N^{k+1}\). Se a solução é melhorada então a busca se inicializa de novo na nova solução melhorada na primeira vizinhança.
+
+Para a implementação do VND foram utilizadas duas vizinhanças, uma \(N^1\) e outra \(N^2\). A vizinhança \(N^1\) troca um bit da representação por vez e testa a solução com o bit trocado e guarda a melhor solução com 1 bit trocado. A vizinhança \(N^2\) troca dois bits da representação por vez e testa a solução com os bits trocados e guarda a melhor solução.
+\end{document}

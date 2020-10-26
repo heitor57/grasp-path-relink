@@ -1,0 +1,65 @@
+#+TITLE: Heurística e Metaheurísticas
+#+SUBTITLE: Atividade Avaliativa 3
+#+AUTHOR: Heitor Lourenço Werneck
+#+EMAIL: heitorwerneck@hotmail.com
+#+DATE: 
+#+LANGUAGE: pt
+#+OPTIONS: ^:nil email:nil toc:nil
+#+LATEX_HEADER: \usepackage[AUTO]{babel}
+# mathtools ja inclui amsmath #+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage[binary-units=true]{siunitx}
+#+LATEX_HEADER: \usepackage[top=0.5cm,bottom=1.5cm,left=2cm,right=2cm]{geometry}
+#+LATEX_HEADER: \usepackage{mdframed}
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usepackage{algpseudocode}
+#+LATEX_HEADER: \usepackage[Algoritmo]{algorithm}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{graphicx,wrapfig,lipsum}
+#+LATEX_HEADER: \usepackage{pifont}
+#+LATEX_HEADER: \usepackage{subfigure}
+#+LATEX_HEADER: \usepackage{rotating}
+#+LATEX_HEADER: \usepackage{multirow}
+#+LATEX_HEADER: \usepackage{tablefootnote}
+#+LATEX_HEADER: \usepackage{enumitem}
+#+LATEX_HEADER: \usepackage{natbib}
+#+LATEX_HEADER: \usepackage{dblfloatfix}
+#+LATEX_HEADER: \usepackage{color, colortbl}
+#+LATEX_HEADER: \usepackage{chngcntr}
+#+LATEX_HEADER: \usepackage{epstopdf}
+#+LATEX_HEADER: \usepackage{comment}
+#+LATEX_HEADER: \usepackage{float}
+
+#+latex_class_options: [11pt]
+
+#+PROPERTY: header-args :eval no-export
+
+* Introdução
+
+O GRASP é um método que utiliza como princípio a combinação de um método construtivo com busca local, em um procedimento iterativo com iterações completamente independentes.
+
+Já o Path Relinking é um método que faz um balanço entre intensificação e diversificação, o método considera um par de soluções e o objetivo e chegar na solução guia a partir da solução de partida, por meio disto ele consegue os feitos citados anteriormente.
+
+A combinação dos dois métodos será estudada a seguir.
+
+* Estrátegias e implementação
+
+Para a formulação do GRASP primeiro foi utilizado uma heuristica construtiva por valor, ou seja, a lista restrita de candidatos é $\{j | c_j \geq c_{max} - \alpha(c_{max}-c_{min})\}$. O alpha utilizado foi $0.7$, isso tendo uma lista bem diversa em soluções.
+
+O algoritmo de busca local utilizado foi o VND(Variable Neighborhood Descent), sendo este algoritmo uma busca local que utiliza vizinhanças sucessivas na descida até um ótimo local. Se uma solução $s$ não é melhorada na sua vizinhança atual/corrente $N^k(s)$, a estrutura é alterada da vizinhança $N^k$ para $N^{k+1}$. Se a solução é melhorada então a busca se inicializa de novo na nova solução melhorada na primeira vizinhança.
+
+Para a implementação do VND foram utilizadas duas vizinhanças, uma $N^1$ e outra $N^2$. A vizinhança $N^1$ troca um bit da representação por vez e testa a solução com o bit trocado e guarda a melhor solução com 1 bit trocado. A vizinhança $N^2$ troca dois bits da representação por vez e testa a solução com os bits trocados e guarda a melhor solução.
+
+Para combinar o *Path Relinking* com o GRASP foi utilizado o *Path Relinking* como etapa de intensificação entre um ótimo local e uma solução elite. A solução elite escolhida é aleatória.
+
+O conjunto elite foi definido com um tamanho fixo de 10. O critério de entrada de uma solução no conjunto é de ser melhor que a pior solução no conjunto. O critério de saída escolhe a pior solução para sair da lista.
+
+A direção utilizada para o Path Relinking foi a reconexão por caminhos regressiva pois é considerada mais eficiente.
+
+* Resultados
+Como os algoritmos não são determinísticos então cada abordagem será aplicada 5 vezes e cada valor apresentado é a média dessas 5 execuções.
+
+
+

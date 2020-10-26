@@ -1,5 +1,5 @@
 #include "Grasp.h"
-
+#include <fstream>
 #include <iostream>
 #include <random>
 #include <climits>
@@ -95,7 +95,7 @@ std::vector<bool> Grasp::path_relinking(BinaryKnapsack& binary_knapsack,std::vec
 }
 
 
-std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack)
+std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack,std::ofstream& out_file)
 {
   long fo_star = LONG_MIN;
   std::vector<long> elites_ofv;
@@ -135,9 +135,9 @@ std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack)
           aux_solution=current_path_relinking_solution;
       }
 
-      auto max_element_index = std::max_element(elites_ofv.begin(),elites_ofv.end()) - elites_ofv.begin();
+      auto min_element_index = std::min_element(elites_ofv.begin(),elites_ofv.end()) - elites_ofv.begin();
       if(elites_solution.size()==0 || objective_function(binary_knapsack,aux_solution)>
-         elites_ofv[max_element_index]){
+         elites_ofv[min_element_index]){
         auto min_element_index = std::min_element(elites_ofv.begin(),elites_ofv.end()) - elites_ofv.begin();
         if(elites_solution.size()<num_elite){
           elites_solution.push_back(aux_solution);
@@ -152,7 +152,7 @@ std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack)
       printf("Path reliking solution: %ld\n", objective_function(binary_knapsack,aux_solution));
 #endif
     }
-
+    out_file << i <<" "<< objective_function(binary_knapsack,aux_solution) << std::endl;
     // Atualiza melhor solucao
     if (objective_function(binary_knapsack,aux_solution) > fo_star) {
       // copia em s a melhor solucao

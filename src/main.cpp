@@ -46,7 +46,7 @@ int main(int argc, char **argv){
   std::ofstream out_file (results_dir+output_file_name);
 
   clock_t begin = clock();
-  auto solution = grasp.run(binary_knapsack);
+  auto solution = grasp.run(binary_knapsack,out_file);
   clock_t end = clock();
   double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
@@ -55,8 +55,8 @@ int main(int argc, char **argv){
             << objective_function(binary_knapsack,solution)
             << std::endl;
   std::cout << "Elapsed time: " << elapsed_secs << " seconds\n";
-  out_file << objective_function(binary_knapsack, solution)<<"\n";
-  out_file << elapsed_secs<<"\n";
+  out_file << "Best: "<<objective_function(binary_knapsack, solution)<<"\n";
+  out_file << "Time: "<<elapsed_secs<<"\n";
   out_file.close();
 
   return 0;

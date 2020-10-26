@@ -1,6 +1,6 @@
 #include "Item.h"
 #include <string>
-Item::Item(int weight_, int utility_):weight(weight_),utility(utility_){}
+Item::Item(int weight_, int utility_):weight(weight_),utility(utility_),profit(utility_/weight_){}
 Item::Item():weight(0),utility(0){}
 
 std::string Item::to_string(){

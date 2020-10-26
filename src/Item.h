@@ -6,6 +6,7 @@ class Item
 {
  public:
   int weight, utility, id;
+  double profit;
   Item(int weight_, int utility_);
   Item();
   std::string to_string();

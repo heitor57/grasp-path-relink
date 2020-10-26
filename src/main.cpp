@@ -25,12 +25,20 @@ int main(int argc, char **argv){
   for(int i=0; i<num_items; i++){
     in_file >> binary_knapsack.items[i].utility >>binary_knapsack.items[i].weight;
     binary_knapsack.items[i].id = i;
+    binary_knapsack.items[i].profit = binary_knapsack.items[i].utility/binary_knapsack.items[i].weight;
   }
-  Grasp grasp(0.7,50,10,false);
+  Grasp grasp(0.7,50,10,true);
   auto solution = grasp.run(binary_knapsack);
 
   std::cout << "Best solution: "
             << objective_function(binary_knapsack,solution)
             << std::endl ;
+
+  
+  // std::default_random_engine generator(rd());
+  // std::cout << std::uniform_int_distribution<int>(0,9)(generator)
+  //           <<" "<<time(0)
+  //           << std::endl ;
+
   return 0;
 }

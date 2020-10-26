@@ -13,7 +13,7 @@ class Grasp
   void construction(const BinaryKnapsack& binary_knapsack,
                     std::vector<bool>& solution);
   std::vector<bool> run(BinaryKnapsack binary_knapsack);
-  std::vector<bool> path_relinking(BinaryKnapsack& binary_knapsack,std::vector<bool>& s1,std::vector<bool>& s2);
+  std::vector<bool> path_relinking(BinaryKnapsack& binary_knapsack,const std::vector<bool>& s1,const std::vector<bool>& s2);
 };
 
 #endif

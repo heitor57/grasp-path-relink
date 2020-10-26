@@ -1,4 +1,4 @@
 build/
-data/
 base/
 *.zip
+data/results/

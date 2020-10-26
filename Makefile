@@ -1,5 +1,5 @@
 # source: https://gist.github.com/mauriciopoppe/de8908f67923091982c8c8136a063ea6
-CXX ?= g++ -DDEBUG
+CXX ?= g++ #-DDEBUG
 
 # path #
 SRC_PATH = src
@@ -23,7 +23,7 @@ OBJECTS = $(SOURCES:$(SRC_PATH)/%.$(SRC_EXT)=$(BUILD_PATH)/%.o)
 DEPS = $(OBJECTS:.o=.d)
 
 # flags #
-COMPILE_FLAGS = -std=c++11 -Wall -Wextra -g -O3
+COMPILE_FLAGS = -std=c++11 -Wall -Wextra -g -O3 #-DDEBUG
 INCLUDES = -I include/ -I /usr/local/include
 # Space-separated pkg-config libraries used by this project
 LIBS =

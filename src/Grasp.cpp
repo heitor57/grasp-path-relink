@@ -12,7 +12,7 @@ Grasp::Grasp(float alpha_, int iter_max_, long unsigned int num_elite_,bool use_
   alpha(alpha_), iter_max(iter_max_), num_elite(num_elite_), use_path_relinking(use_path_relinking_) {}
 
 void Grasp::construction(const BinaryKnapsack& binary_knapsack,
-                                      std::vector<bool>& solution){
+                         std::vector<bool>& solution){
   std::list<Item> sorted_items(binary_knapsack.items.begin(), binary_knapsack.items.end());
   sorted_items.sort([](const Item &a,const Item& b) {
     return a.profit > b.profit;
@@ -55,11 +55,11 @@ void Grasp::construction(const BinaryKnapsack& binary_knapsack,
   }
 }
 
-std::vector<bool> Grasp::path_relinking(BinaryKnapsack& binary_knapsack,const std::vector<bool>& s1,const std::vector<bool>& s2){
+std::vector<bool> Grasp::path_relinking(BinaryKnapsack& binary_knapsack,std::vector<bool>& s1,std::vector<bool>& s2){
   std::vector<bool> aux_solution = s1;
-  std::vector<bool> best_solution(s1.size());
+  std::vector<bool> best_solution = s1;
   // std::vector<bool> best_local_solution(s1.size());
-  long best_ofv=LONG_MIN,best_local_ofv=LONG_MIN,current_ofv=LONG_MIN;
+  long best_ofv=objective_function(binary_knapsack,best_solution),best_local_ofv=LONG_MIN,current_ofv=LONG_MIN;
   std::list<long unsigned int> different_values_positions;
   for(long unsigned int i=0; i<s1.size();i++){
     if(s1[i]!=s2[i]){
@@ -68,12 +68,16 @@ std::vector<bool> Grasp::path_relinking(BinaryKnapsack& binary_knapsack,const st
   }
 
   auto best_local_element= different_values_positions.begin();// just to initialize
+
+  // printf("%ld %ld\n",different_values_positions.size(),objective_function(binary_knapsack,s2));
   for(long unsigned int i=0;i < different_values_positions.size();i++){
     current_ofv = LONG_MIN;
     best_local_ofv = LONG_MIN;
+    // printf("=-----%ld-----=\n",i);
     for(auto j=different_values_positions.begin();j!=different_values_positions.end();++j){
       aux_solution[*j]= !aux_solution[*j];
       current_ofv = objective_function(binary_knapsack,aux_solution);
+      // printf("%ld %ld\n",*j,current_ofv);
       if(current_ofv > best_local_ofv){
         best_local_ofv = current_ofv;
         best_local_element = j;
@@ -104,6 +108,7 @@ std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack)
   
 
   for (int i = 0; i<iter_max; i++) {
+    printf("---- iteration %d ----\n",i);
     // Limpa solucao
     // Constroi solucao parcialmente gulosa
     construction(binary_knapsack,aux_solution);
@@ -113,22 +118,28 @@ std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack)
     VND(binary_knapsack,aux_solution);
     printf("Refined solution: %ld\n", objective_function(binary_knapsack,aux_solution));
     if(use_path_relinking){
+      // apply path relinking
       if(elites_solution.size()>=1){
+        // choose one random elite solution
         int k = std::uniform_int_distribution<int>(0,(int)elites_solution.size()-1)(generator);
+        // apply the path relinking
         std::vector<bool> current_path_relinking_solution=path_relinking(binary_knapsack,elites_solution[k],aux_solution);
         if(objective_function(binary_knapsack,current_path_relinking_solution)>
-           objective_function(binary_knapsack,aux_solution)){
+           objective_function(binary_knapsack,aux_solution))
           aux_solution=current_path_relinking_solution;
-        }
       }
 
-      if(elites_solution.size()<num_elite){
-        elites_solution.push_back(aux_solution);
-        elites_ofv.push_back(objective_function(binary_knapsack,aux_solution));
-      }else{
+      auto max_element_index = std::max_element(elites_ofv.begin(),elites_ofv.end()) - elites_ofv.begin();
+      if(elites_solution.size()==0 || objective_function(binary_knapsack,aux_solution)>
+         elites_ofv[max_element_index]){
         auto min_element_index = std::min_element(elites_ofv.begin(),elites_ofv.end()) - elites_ofv.begin();
-        elites_solution[min_element_index] = aux_solution;
-        elites_ofv[min_element_index] = objective_function(binary_knapsack,aux_solution);
+        if(elites_solution.size()<num_elite){
+          elites_solution.push_back(aux_solution);
+          elites_ofv.push_back(objective_function(binary_knapsack,aux_solution));
+        }else{
+          elites_solution[min_element_index] = aux_solution;
+          elites_ofv[min_element_index] = objective_function(binary_knapsack,aux_solution);
+        }
       }
 
       printf("Path reliking solution: %ld\n", objective_function(binary_knapsack,aux_solution));

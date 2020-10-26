@@ -2,3 +2,4 @@ build/
 base/
 *.zip
 data/results/
+data/

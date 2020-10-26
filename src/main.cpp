@@ -13,7 +13,8 @@ int main(int argc, char **argv){
   std::string data_dir = "../data/";
   std::string results_dir =  data_dir+"results/";
 
-  if(argc == 1){
+  if(argc < 2){
+    std::cout << "Please, pass the parameters: <input file name> <id of the execution>\n";
     return 1;
   }
 
@@ -44,7 +45,12 @@ int main(int argc, char **argv){
     +"-"+ std::to_string(grasp.alpha)
     +"-"+ std::to_string(grasp.iter_max)
     +"-"+ std::to_string(grasp.num_elite)
-    +"-"+ std::to_string(grasp.use_path_relinking)
-    + ".txt";
+    +"-"+ std::to_string(grasp.use_path_relinking);
+    // +"-"+ std::to_string(grasp.use_path_relinking);
+  if(argc >= 3){
+    output_file_name+= "-" + std::string(argv[2]);
+  }
+  output_file_name += ".txt";
+  std::cout << output_file_name;
   return 0;
 }

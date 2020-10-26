@@ -63,35 +63,37 @@ Como os algoritmos não são determinísticos então cada abordagem será aplica
 
 Usando a instâncias "large scale" de http://artemisa.unicauca.edu.co/~johnyortega/instances_01_KP/ os resultados são mostrados na tabela abaixo:
 
-| Instância            | Usando PR | Função Objetivo | Tempo (s) |
-| knapPI_1_1000_1000_1 | Não       |         54373.2 |    641.63 |
-| knapPI_1_1000_1000_1 | Sim       |         54357.2 |    640.83 |
-| knapPI_1_100_1000_1  | Não       |          9147.0 |      0.30 |
-| knapPI_1_100_1000_1  | Sim       |          9147.0 |      0.31 |
-| knapPI_1_200_1000_1  | Não       |         11238.0 |      2.55 |
-| knapPI_1_200_1000_1  | Sim       |         11238.0 |      2.52 |
-| knapPI_1_500_1000_1  | Não       |         28852.4 |     56.81 |
-| knapPI_1_500_1000_1  | Sim       |         28857.0 |     57.00 |
-| knapPI_2_1000_1000_1 | Não       |          7122.8 |    574.60 |
-| knapPI_2_1000_1000_1 | Sim       |          7381.4 |    604.27 |
-| knapPI_2_100_1000_1  | Não       |          1482.8 |      0.33 |
-| knapPI_2_100_1000_1  | Sim       |          1456.6 |      0.31 |
-| knapPI_2_200_1000_1  | Não       |          1476.6 |      2.30 |
-| knapPI_2_200_1000_1  | Sim       |          1463.2 |      2.31 |
-| knapPI_2_500_1000_1  | Não       |          3707.2 |     62.78 |
-| knapPI_2_500_1000_1  | Sim       |          3768.6 |     62.97 |
-| knapPI_3_1000_1000_1 | Não       |         14350.0 |    135.29 |
-| knapPI_3_1000_1000_1 | Sim       |         14350.0 |    135.14 |
-| knapPI_3_100_1000_1  | Não       |          1976.8 |      0.17 |
-| knapPI_3_100_1000_1  | Sim       |          1957.0 |      0.18 |
-| knapPI_3_200_1000_1  | Não       |          2697.0 |      1.31 |
-| knapPI_3_200_1000_1  | Sim       |          2697.0 |      1.36 |
-| knapPI_3_500_1000_1  | Não       |          7117.0 |     19.58 |
-| knapPI_3_500_1000_1  | Sim       |          7117.0 |     19.42 |
+| Instância            | Usando PR | Função Objetivo | Tempo (s) | Ótimo |
+| knapPI_1_1000_1000_1 | Não       |         54373.2 |    641.63 | 54503 |
+| knapPI_1_1000_1000_1 | Sim       |         54357.2 |    640.83 | 54503 |
+| knapPI_1_100_1000_1  | Não       |          9147.0 |      0.30 |  9147 |
+| knapPI_1_100_1000_1  | Sim       |          9147.0 |      0.31 |  9147 |
+| knapPI_1_200_1000_1  | Não       |         11238.0 |      2.55 | 11238 |
+| knapPI_1_200_1000_1  | Sim       |         11238.0 |      2.52 | 11238 |
+| knapPI_1_500_1000_1  | Não       |         28852.4 |     56.81 | 28857 |
+| knapPI_1_500_1000_1  | Sim       |         28857.0 |     57.00 | 28857 |
+| knapPI_2_1000_1000_1 | Não       |          7122.8 |    574.60 |  9052 |
+| knapPI_2_1000_1000_1 | Sim       |          7381.4 |    604.27 |  9052 |
+| knapPI_2_100_1000_1  | Não       |          1482.8 |      0.33 |  1514 |
+| knapPI_2_100_1000_1  | Sim       |          1456.6 |      0.31 |  1514 |
+| knapPI_2_200_1000_1  | Não       |          1476.6 |      2.30 |  1634 |
+| knapPI_2_200_1000_1  | Sim       |          1463.2 |      2.31 |  1634 |
+| knapPI_2_500_1000_1  | Não       |          3707.2 |     62.78 |  4566 |
+| knapPI_2_500_1000_1  | Sim       |          3768.6 |     62.97 |  4566 |
+| knapPI_3_1000_1000_1 | Não       |         14350.0 |    135.29 | 14390 |
+| knapPI_3_1000_1000_1 | Sim       |         14350.0 |    135.14 | 14390 |
+| knapPI_3_100_1000_1  | Não       |          1976.8 |      0.17 |  2397 |
+| knapPI_3_100_1000_1  | Sim       |          1957.0 |      0.18 |  2397 |
+| knapPI_3_200_1000_1  | Não       |          2697.0 |      1.31 |  2697 |
+| knapPI_3_200_1000_1  | Sim       |          2697.0 |      1.36 |  2697 |
+| knapPI_3_500_1000_1  | Não       |          7117.0 |     19.58 |  7117 |
+| knapPI_3_500_1000_1  | Sim       |          7117.0 |     19.42 |  7117 |
 
 É possível obesrvar que não houve diferença significativa na utilização ou não do Path Relinking no tempo de execução, isso pois ele possui complexidade $O(n^2)$ e além disso a distância de hamming é sempre bem pequena entre soluções. O principal que utiliza mais a CPU é a busca local, então a redução ou otimização de outros componentes do algoritmo tem pouco impacto no tempo geral.
 
 Em algumas instâncias o GRASP-PR conseguiu sobressair o GRASP puro porém pelo não determinísmo do algoritmo algumas vezes o GRASP conseguiu ser melhor que o GRASP-PR por muito pouco, porém o GRASP-PR conseguiu aumentos mais significativos.
+
+Porém os dois algoritmos conseguiram obter valores próximos do ótimo e mostraram que conseguem obter uma solução boa em tempo viável.
 
 Para ter uma ideia de como as soluções se comportam durante as iterações vamos observar o gráfico abaixo(Obs o gráfico é a média de cada iteração das 5 execuções, ou seja, isso não quer dizer que o valor máximo é realmente o valor máximo de uma execução pois o que está apresentado é a média):
 

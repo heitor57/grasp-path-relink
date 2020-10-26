@@ -108,15 +108,21 @@ std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack)
   
 
   for (int i = 0; i<iter_max; i++) {
+    #ifdef DEBUG
     printf("---- iteration %d ----\n",i);
+    #endif
     // Limpa solucao
     // Constroi solucao parcialmente gulosa
     construction(binary_knapsack,aux_solution);
     // constroi_solucao_grasp(n,aux_solution,p,w,b,alfa);
+    #ifdef DEBUG
     printf("Constructed solution: %ld\n", objective_function(binary_knapsack,aux_solution));
+    #endif
     // Aplica busca local na solucao construida
     VND(binary_knapsack,aux_solution);
+    #ifdef DEBUG
     printf("Refined solution: %ld\n", objective_function(binary_knapsack,aux_solution));
+    #endif
     if(use_path_relinking){
       // apply path relinking
       if(elites_solution.size()>=1){
@@ -142,7 +148,9 @@ std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack)
         }
       }
 
+#ifdef DEBUG
       printf("Path reliking solution: %ld\n", objective_function(binary_knapsack,aux_solution));
+#endif
     }
 
     // Atualiza melhor solucao

@@ -1,5 +1,5 @@
 # source: https://gist.github.com/mauriciopoppe/de8908f67923091982c8c8136a063ea6
-CXX ?= g++
+CXX ?= g++ -DDEBUG
 
 # path #
 SRC_PATH = src

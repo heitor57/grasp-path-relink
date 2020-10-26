@@ -33,7 +33,9 @@ void best_neighbor_1(BinaryKnapsack& binary_knapsack, std::vector<bool>& solutio
   if (fo_max > fo_original) {
     solution[melhor_bit] = !solution[melhor_bit];
     // troca_bit(s,melhor_bit);
+#ifdef DEBUG
     printf("Better neighbor at N1! FO = %ld\n", fo_max);
+    #endif
   }
 
 }
@@ -82,7 +84,9 @@ void best_neighbor_2(BinaryKnapsack& binary_knapsack, std::vector<bool>& solutio
   if (fo_max > fo_original) {
     solution[melhor_bit_1] = !solution[melhor_bit_1];
     solution[melhor_bit_2] = !solution[melhor_bit_2];
+#ifdef DEBUG
     printf("Better neighbor at N2! FO = %ld\n", fo_max);
+    #endif
   }
 }
 void VND(BinaryKnapsack& binary_knapsack,std::vector<bool>& solution){

@@ -34,13 +34,13 @@ int main(int argc, char **argv){
   Grasp grasp(0.7,50,10,true);
   // opening the output file
   std::string output_file_name = std::to_string(binary_knapsack.items.size())
-    +"-"+ std::to_string(binary_knapsack.capacity)
-    +"-"+ std::to_string(grasp.alpha)
-    +"-"+ std::to_string(grasp.iter_max)
-    +"-"+ std::to_string(grasp.num_elite)
-    +"-"+ std::to_string(grasp.use_path_relinking);
+    +"_"+ std::to_string(binary_knapsack.capacity)
+    +"_"+ std::to_string(grasp.alpha)
+    +"_"+ std::to_string(grasp.iter_max)
+    +"_"+ std::to_string(grasp.num_elite)
+    +"_"+ std::to_string(grasp.use_path_relinking);
   if(argc >= 3){
-    output_file_name+= "-" + std::string(argv[2]);
+    output_file_name+= "_" + std::string(argv[2]);
   }
   output_file_name += ".txt";
   std::ofstream out_file (results_dir+output_file_name);
@@ -50,6 +50,7 @@ int main(int argc, char **argv){
   clock_t end = clock();
   double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
+  
   std::cout << "Best solution: "
             << objective_function(binary_knapsack,solution)
             << std::endl;

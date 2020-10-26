@@ -7,7 +7,7 @@ BUILD_PATH = build
 BIN_PATH = $(BUILD_PATH)/bin
 
 # executable # 
-BIN_NAME = main
+BIN_NAME = run
 
 # extensions #
 SRC_EXT = cpp

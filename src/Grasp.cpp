@@ -113,7 +113,7 @@ std::vector<bool> Grasp::run(BinaryKnapsack binary_knapsack)
     // Constroi solucao parcialmente gulosa
     construction(binary_knapsack,aux_solution);
     // constroi_solucao_grasp(n,aux_solution,p,w,b,alfa);
-    printf("Constructed solution: %ld\t", objective_function(binary_knapsack,aux_solution));
+    printf("Constructed solution: %ld\n", objective_function(binary_knapsack,aux_solution));
     // Aplica busca local na solucao construida
     VND(binary_knapsack,aux_solution);
     printf("Refined solution: %ld\n", objective_function(binary_knapsack,aux_solution));

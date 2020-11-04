@@ -95,7 +95,7 @@ Em algumas instâncias o GRASP-PR conseguiu sobressair o GRASP puro porém pelo 
 
 Porém os dois algoritmos conseguiram obter valores próximos do ótimo e mostraram que conseguem obter uma solução boa em tempo viável.
 
-Para ter uma ideia de como as soluções se comportam durante as iterações vamos observar o gráfico abaixo(Obs o gráfico é a média de cada iteração das 5 execuções, ou seja, isso não quer dizer que o valor máximo é realmente o valor máximo de uma execução pois o que está apresentado é a média):
+Para ter uma ideia de como as soluções se comportam durante as iterações vamos observar o gráfico abaixo(Observação: o gráfico é a média de cada iteração das 5 execuções, ou seja, isso não quer dizer que o valor máximo é realmente o valor máximo de uma execução pois o que está apresentado é a média):
 
 #+begin_export latex
 \begin{figure}[H]
